@@ -1,18 +1,11 @@
 import mysql.connector
 
 CONFIG = {
-    "user": "oxg7237_ahc4860",
-    "password": "Ahc@4860",
-    "host": "51.81.160.154",
-    "database": "oxg7237_ahc4860",
+    "user": "root",
+    "password": "",
+    "host": "localhost",
+    "database": "ArlingtonSprouts",
 }
-
-# CONFIG = {
-#     "user": "root",
-#     "password": "karannanda95",
-#     "host": "localhost",
-#     "database": "birdview",
-# }
 
 def create_db_connection():
     try:

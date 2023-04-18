@@ -2,7 +2,6 @@ from flask import Flask, request, json
 from flask_cors import CORS
 from db import create_db_connection
 from http_codes import http_200, http_500, http_400, http_401
-import mysql.connector
 
 app = Flask(__name__)
 CORS(app)
@@ -20,7 +19,7 @@ def test():
         connection = create_db_connection()
         try:
             cursor = connection.cursor()
-            query = "SELECT * FROM test_table"
+            query = "SELECT * FROM CUSTOMER"
             cursor.execute(query)
             rows = cursor.fetchall()
             if rows:
