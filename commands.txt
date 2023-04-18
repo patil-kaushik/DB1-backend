@@ -1,2 +1,0 @@
-# CONNECT TO MySQL database after entering omega
-mysql -u ahc4860 -p -h acadmysqldb001p
