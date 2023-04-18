@@ -1,6 +1,5 @@
 from flask import Flask, request, json
 from flask_cors import CORS
-from cart import add_cart_item, get_cart_items, remove_cart_item
 from db import create_db_connection
 from http_codes import http_200, http_500, http_400, http_401
 import mysql.connector
