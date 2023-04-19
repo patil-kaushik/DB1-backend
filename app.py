@@ -39,3 +39,119 @@ def test():
         if connection is not None:
             print("Closing database connection...")
             connection.close()
+
+# @app.route('/itemlist', methods=['GET'])
+# def get_item_list():
+#     connection = None
+#     try:
+#         connection = create_db_connection()
+#         try:
+#             cursor = connection.cursor()
+#             query
+
+@app.route('/getitem', methods=['POST'])
+def get_item():
+    item_name = request.json.get('name')
+    iId_value = request.json.get('id')
+    connection = None
+    try:
+        connection = create_db_connection()
+        try:
+            cursor = connection.cursor()
+            print(item_name)
+            cursor.execute(''' SELECT * FROM ITEM WHERE Iname = %s OR iId = %s ''', (item_name,iId_value))
+            rows = cursor.fetchall()
+            print(rows)
+            connection.commit()
+            return http_200(rows)
+        except Exception as e:
+            print(e)
+        finally:
+            if cursor is not None:
+                cursor.close()
+    except Exception as e:
+        print("Database connection failed...\n")
+        return http_500(e)
+    finally:
+        if connection is not None:
+            print("Closing database connection...")
+            connection.close()
+
+@app.route('/items', methods=['POST'])
+def add_item():
+    item_name = request.json.get('name')
+    iId_value = request.json.get('id')
+    price = request.json.get('sprice')
+    connection = None
+    try:
+        connection = create_db_connection()
+        try:
+            cursor = connection.cursor()
+            print(item_name)
+            print(iId_value)
+            print(price)
+            cursor.execute(''' INSERT INTO ITEM (iId, Iname, Sprice) VALUES(%s,%s,%s)''',(iId_value, item_name, price))
+            connection.commit()
+            return http_200("Item added successfully")
+        except Exception as e:
+            print(e)
+        finally:
+            if cursor is not None:
+                cursor.close()
+    except Exception as e:
+        print("Database connection failed...\n")
+        return http_500(e)
+    finally:
+        if connection is not None:
+            print("Closing database connection...")
+            connection.close()
+
+@app.route('/updateitem', methods=['POST'])
+def update_item():
+    item_name = request.json.get('name')
+    connection = None
+    try:
+        connection = create_db_connection()
+        try:
+            cursor = connection.cursor()
+            print(item_name)
+            cursor.execute(''' UPDATE ITEM SET Iname = %s WHERE Iname = %s ''', (item_name, "Carot Sprouts"))
+            connection.commit()
+            return http_200("Item updated successfully")
+        except Exception as e:
+            print(e)
+        finally:
+            if cursor is not None:
+                cursor.close()
+    except Exception as e:
+        print("Database connection failed...\n")
+        return http_500(e)
+    finally:
+        if connection is not None:
+            print("Closing database connection...")
+            connection.close()
+
+@app.route('/deleteitem', methods=['POST'])
+def delete_item():
+    item_name = request.json.get('name')
+    connection = None
+    try:
+        connection = create_db_connection()
+        try:
+            cursor = connection.cursor()
+            print(item_name)
+            cursor.execute(''' DELETE FROM ITEM WHERE Iname = %s ''', (item_name,))
+            connection.commit()
+            return http_200("Item deleted successfully")
+        except Exception as e:
+            print(e)
+        finally:
+            if cursor is not None:
+                cursor.close()
+    except Exception as e:
+        print("Database connection failed...\n")
+        return http_500(e)
+    finally:
+        if connection is not None:
+            print("Closing database connection...")
+            connection.close()
