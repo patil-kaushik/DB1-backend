@@ -77,6 +77,39 @@ def get_item():
             print("Closing database connection...")
             connection.close()
 
+@app.route('/showitems', methods=['GET'])
+def show_items():
+    connection = None
+    try:
+        connection = create_db_connection()
+        try:
+            cursor = connection.cursor()
+            cursor.execute(''' SELECT * FROM ITEM ''')
+            rows = cursor.fetchall()
+            connection.commit()
+            data = []
+            if rows:
+                for row in rows: 
+                    resp = {}
+                    resp["id"] = row[0]
+                    resp["name"] = row[1]
+                    resp["price"] = float(row[2])
+                    data.append(resp)
+            print(data)
+            return http_200(data)
+        except Exception as e:
+            print(e)
+        finally:
+            if cursor is not None:
+                cursor.close()
+    except Exception as e:
+        print("Database connection failed...\n")
+        return http_500(e)
+    finally:
+        if connection is not None:
+            print("Closing database connection...")
+            connection.close()
+
 @app.route('/items', methods=['POST'])
 def add_item():
     item_name = request.json.get('name')
