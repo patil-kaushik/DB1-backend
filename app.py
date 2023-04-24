@@ -1,3 +1,6 @@
+# Team Members:
+# Kaushik Patil - 1001928970
+# Vivek Yelethotadahalli Srinivas - 1002064152
 from flask import Flask, request, json
 from flask_cors import CORS
 from db import create_db_connection
@@ -61,9 +64,17 @@ def get_item():
             print(item_name)
             cursor.execute(''' SELECT * FROM ITEM WHERE Iname = %s OR iId = %s ''', (item_name,iId_value))
             rows = cursor.fetchall()
-            print(rows)
             connection.commit()
-            return http_200(rows)
+            data = []
+            if rows:
+                for row in rows: 
+                    resp = {}
+                    resp["id"] = row[0]
+                    resp["name"] = row[1]
+                    resp["price"] = float(row[2])
+                    data.append(resp)
+            print(data)
+            return http_200(data)
         except Exception as e:
             print(e)
         finally:

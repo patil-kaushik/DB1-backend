@@ -1,3 +1,6 @@
+# Team Members:
+# Kaushik Patil - 1001928970
+# Vivek Yelethotadahalli Srinivas - 1002064152
 import mysql.connector
 
 CONFIG = {
