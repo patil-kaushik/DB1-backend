@@ -153,13 +153,14 @@ def add_item():
 @app.route('/updateitem', methods=['POST'])
 def update_item():
     item_name = request.json.get('name')
+    new_name = request.json.get('name2')
     connection = None
     try:
         connection = create_db_connection()
         try:
             cursor = connection.cursor()
             print(item_name)
-            cursor.execute(''' UPDATE ITEM SET Iname = %s WHERE Iname = %s ''', (item_name, "Carot Sprouts"))
+            cursor.execute(''' UPDATE ITEM SET Iname = %s WHERE Iname = %s ''', (new_name, item_name,))
             connection.commit()
             return http_200("Item updated successfully")
         except Exception as e:
